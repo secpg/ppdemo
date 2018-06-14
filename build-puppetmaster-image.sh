@@ -1,20 +1,20 @@
 #!/bin/bash
 
 ####### Variables
-PE_VERSION="2018.1.2"
+PE_VERSION="2017.3.5"
 IMAGE_NAME="my-puppet-enterprise:${PE_VERSION}"
 PUPPET_MASTER_HOSTNAME="puppet.cyberark.local"
 ####### End Variables #######
 
 # Make sure we have the latest version of ubuntu:14.04
-docker pull ubuntu:16.04
+docker pull ubuntu:14.04
 
 #Clean up old conatiner if exists
 docker rm -f create-puppet-image
 
 echo "step 1: Start Ubuntu container"
 # Start a docker container that we're going to use
-docker run -d -it --name create-puppet-image -h ${PUPPET_MASTER_HOSTNAME} -v $(pwd)/puppet-enterprise:/root/puppet:z ubuntu:16.04
+docker run -d -it --name create-puppet-image -h ${PUPPET_MASTER_HOSTNAME} -v $(pwd)/puppet-enterprise:/root/puppet:z ubuntu:14.04
 
 echo "step 2: Install Puppet"
 # Start the install in the container
