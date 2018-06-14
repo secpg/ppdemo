@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ####### Variables
-PE_VERSION="2017.3.5"
+PE_VERSION="2017.3.1"
 IMAGE_NAME="registry.tld/puppet-enterprise:${PE_VERSION}"
 ADMIN_PASSWORD="Cyberark1"
 PUPPET_MASTER_HOSTNAME="puppet.cyberark.local"
@@ -54,7 +54,6 @@ puppet module install cyberark-conjur
 # Create an ENTRYPOINT file
 cat > /usr/local/bin/start-puppet-enterprise <<'ENTRYPOINT'
 #!/bin/bash
-
 # Turn on autosign
 AUTOSIGN="${AUTOSIGN:-}"
 if [[ -n "$AUTOSIGN" ]]; then
@@ -62,7 +61,6 @@ if [[ -n "$AUTOSIGN" ]]; then
     puppet resource pe_file_line ensure=present line='autosign = true' path=/etc/puppetlabs/puppet/puppet.conf
     puppet config set autosign "$AUTOSIGN" --section master
 fi
-
 puppet resource service mcollective ensure=running enable=true
 puppet resource service pxp-agent ensure=running enable=true
 puppet resource service puppet ensure=running enable=true
@@ -73,7 +71,6 @@ puppet resource service pe-nginx ensure=running enable=true
 puppet resource service pe-puppetserver ensure=running enable=true
 puppet resource service pe-orchestration-services ensure=running enable=true
 puppet resource service pe-console-services ensure=running enable=true
-
 ####### </ Jeffery Bagirimvano >
 ENTRYPOINT
 
